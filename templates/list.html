@@ -9,12 +9,36 @@
           <span class="navbar-brand mb-0 h1">Signed Students</span>
         </nav>
         <div class="container" style="margin-top: 40px;">
-            <ul>
-                {% for student in list %}
-                    <li>{{ student['name'] }}</li>
-                {% endfor %}
+        <a class="btn btn-dark" style="margin: 30px;" href="{{ url_for('index') }}">Go back</a>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Phone</th>
+              <th scope="col">e-mail</th>
+              <th scope="col">School</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for student in list %}
+                <tr>
+                    <td>
+                        {{ student['name'] }}
+                    </td>
+                <td>
+                        {{ student['phone'] }}
+                    </td>
+                <td>
+                        {{ student['email'] }}
+                    </td>
+                <td>
+                        {{ student['school'] }}
+                    </td>
 
-            </ul>
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
         </div>
 
 
