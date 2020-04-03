@@ -1,6 +1,5 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-import sqlite3
 from pathlib import Path
 from os import path
 
@@ -22,15 +21,23 @@ class Registry(db.Model):
 
 
 @app.route('/', methods=['GET', 'POST'])
-def hello_world():
+def index():
     print(request.method)
     if request.method == "GET":
         return render_template("index.html")
     elif request.method == 'POST':
         student = Registry(name=request.form.get("name"), email=request.form.get("email"), phone=request.form.get("phone"), school=request.form.get("school"))
         print(student.__dict__)
-    #db.session.add()
-        return "lol"
+        db.session.add(student)
+        db.session.commit()
+        return redirect(url_for('student_list'))
+
+
+@app.route('/list', methods=['GET'])
+def student_list():
+    if request.method == "GET":
+        students = Registry.query.all()
+        return render_template("list.html", list=students)
 
 
 if __name__ == '__main__':
